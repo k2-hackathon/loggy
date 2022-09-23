@@ -1,0 +1,10 @@
+{
+  "name": "loggy",
+  "version": "0.0.0",
+  "scripts": {
+    "preinstall": "[[ ! -f .env ]] && cp .env.example .env || echo .env exists",
+    "postinstall": "yarn env:cp",
+    "env:cp": "node cp-env.js"
+  },
+  "license": "UNLICENSED"
+}

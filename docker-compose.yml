@@ -1,0 +1,13 @@
+version: "3.0"
+
+services:
+  fastapi:
+    container_name: "loggy-fastapi"
+    build: 
+      context: ./packages/backend
+      dockerfile: ./Dockerfile
+      target: ${STAGE:-local}
+    ports:
+      - 5000:8080
+    env_file:
+      - .env
