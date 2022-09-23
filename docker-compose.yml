@@ -9,5 +9,7 @@ services:
       target: ${STAGE:-local}
     ports:
       - 5000:8080
+    volumes:
+      - ./packages/backend/backend:/app
     env_file:
       - .env
