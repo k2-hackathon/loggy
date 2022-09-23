@@ -5,4 +5,4 @@ router = APIRouter()
 
 @router.get("/get/user/{user_id}")
 def get_users(user_id: int):
-    pass
+    return "get_users endpoint"

@@ -9,4 +9,5 @@ router = APIRouter()
 def create_geo_data(
     user_id: int, longitude: float, latitude: float, timestamp: datetime.datetime
 ):
-    pass
+    return "create_geo_data endpoint"
+
