@@ -10,6 +10,6 @@ services:
     ports:
       - 5000:8080
     volumes:
-      - ./pakcages/backend/backend:/app
+      - ./packages/backend/backend:/app
     env_file:
       - .env
