@@ -1,10 +1,10 @@
 locals {
-  required_tags = {}
-  tags          = merge(var.resource_tags, local.required_tags)
+  iam_required_tags = {}
+  iam_tags          = merge(var.resource_tags, local.iam_required_tags)
 
-  iam_role_task_execution_name = "${local.prefix}-iam_role_task_execution" 
+  iam_role_task_execution_name = "${local.prefix}-iam_role_task_execution"
 
-  iam_role_task_execution_arn   = resource.aws_iam_role.iam_role_task_execution.arn
+  iam_role_task_execution_arn = resource.aws_iam_role.iam_role_task_execution.arn
 }
 
 # NOTE: sample policy
@@ -26,6 +26,8 @@ resource "aws_iam_role" "iam_role_task_execution" {
   })
 
 
+  inline_policy {
+    name = "inline_${local.iam_role_task_execution_name}"
     policy = jsonencode({
       Version = "2012-10-17"
       Statement = [
@@ -36,6 +38,7 @@ resource "aws_iam_role" "iam_role_task_execution" {
         },
       ]
     })
+  }
 
-  tags = local.tags
+  tags = local.iam_tags
 }

@@ -1,6 +1,7 @@
 locals {
-  required_tags       = {}
-  tags                = merge(var.resource_tags, local.required_tags)
+  resource_group_required_tags = {}
+  resource_group_tags          = merge(var.resource_tags, local.resource_group_required_tags)
+
   resource_group_name = local.prefix
 }
 
@@ -12,7 +13,7 @@ resource "aws_resourcegroups_group" "resource_group" {
     query = jsonencode({
       ResourceTypeFilters = ["AWS::AllSupported"],
       TagFilters = [
-        for key, value in local.tags :
+        for key, value in local.resource_group_tags :
         {
           Key : key,
           Values : [value],
@@ -21,5 +22,5 @@ resource "aws_resourcegroups_group" "resource_group" {
     })
   }
 
-  tags = local.tags
+  tags = local.resource_group_tags
 }
