@@ -1,8 +1,10 @@
 from fastapi import FastAPI
-from api.aggregates import router as aggregates_router
-from api.users import router as users_router
+from api.aggregates import router as aggregates
+from api.users import router as users
+from api.geography import router as geography
 
 app = FastAPI()
 
-app.include_router(aggregates_router.router)
-app.include_router(users_router.router)
+app.include_router(aggregates.router)
+app.include_router(users.router)
+app.include_router(geography.router)
