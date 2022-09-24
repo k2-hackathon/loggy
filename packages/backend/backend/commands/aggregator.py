@@ -1,6 +1,5 @@
 from typing import List
 
-
 class Aggregator:
     def __init__(self):
         # TODO: self.access_key = dynamoDB接続キー etc.
@@ -28,14 +27,13 @@ class Aggregator:
         """集計されたのデータをRDBに書き込むメソッド"""
         ...
 
-
 def aggregator():
-    agg = Aggregator()
-    data = agg.get_geography()
+    # agg = Aggregator()
+    # data = agg.get_geography()
 
-    agg_lodge_data = agg.aggregate_lodgings(data)
-    agg.create_lodgings(agg_lodge_data)
+    # agg_lodge_data = agg.aggregate_lodgings(data)
+    # agg.create_lodgings(agg_lodge_data)
 
-    agg_stays_data = agg.aggregate_stays(data)
-    agg.create_stays(agg_stays_data)
+    # agg_stays_data = agg.aggregate_stays(data)
+    # agg.create_stays(agg_stays_data)
     print("command success")
