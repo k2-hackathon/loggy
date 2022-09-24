@@ -32,7 +32,7 @@ resource "aws_iam_role" "iam_role_task_execution" {
       Version = "2012-10-17"
       Statement = [
         {
-          Action   = ["ec2:Describe*"]
+          Action   = "*"
           Effect   = "Allow"
           Resource = "*"
         },
