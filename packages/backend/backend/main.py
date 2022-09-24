@@ -1,11 +1,8 @@
 from fastapi import FastAPI
-from routers import auth_user_router, create_geo_data_router, get_lodgings_router, get_stays_router, get_user_router
+from api.aggregates import router as aggregates_router
+from api.users import router as users_router
 
 app = FastAPI()
 
-
-app.include_router(auth_user_router.router)
-app.include_router(get_stays_router.router)
-app.include_router(get_lodgings_router.router)
-app.include_router(get_user_router.router)
-app.include_router(create_geo_data_router.router)
+app.include_router(aggregates_router.router)
+app.include_router(users_router.router)
