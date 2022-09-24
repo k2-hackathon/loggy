@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ECR_REPOSITORY: d0-loggy-backend
+      ECR_REPOSITORY: d0-loggy-fastapi
 
     steps:
       - name: Checkout
