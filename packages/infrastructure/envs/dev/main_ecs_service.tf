@@ -23,9 +23,9 @@ resource "aws_ecs_service" "ecs_service_api" {
 
   health_check_grace_period_seconds = 60
 
-  deployment_controller {
-    type = "CODE_DEPLOY"
-  }
+  # deployment_controller {
+  #   type = "CODE_DEPLOY"
+  # }
 
   network_configuration {
     assign_public_ip = true
