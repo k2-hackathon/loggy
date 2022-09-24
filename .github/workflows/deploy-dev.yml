@@ -21,6 +21,10 @@ jobs:
         with:
           node-version: '16.13.0'
 
+      - name: Setup env
+        run: |
+          yarn cpenv
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -34,6 +38,7 @@ jobs:
 
       - name: Push image to ECR
         id: push-image
+        working-directory: "packages/backend"
         env:
           DOCKER_BUILDKIT: 1
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
