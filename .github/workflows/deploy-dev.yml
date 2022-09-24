@@ -23,6 +23,7 @@ jobs:
 
       - name: Setup env
         run: |
+          yarn
           yarn cpenv
 
       - name: Configure AWS Credentials
