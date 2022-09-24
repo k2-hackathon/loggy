@@ -23,6 +23,7 @@ jobs:
 
       - name: Setup env
         run: |
+          cp .env.example .env
           yarn
           yarn cpenv
 
