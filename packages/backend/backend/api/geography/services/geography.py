@@ -1,7 +1,6 @@
-from datetime import datetime
 import boto3
 import hashlib
-
+from ..models.geography import GeographyModel
 
 class GeographyService:
     def __init__(self):
@@ -15,22 +14,17 @@ class GeographyService:
 
     def create_geography(
         self,
-        user_id: int,
-        longitude: float,
-        latitude: float,
-        timestamp: datetime.timestamp,
+        request_data: GeographyModel
     ):
         """DynamoDBに位置情報の生データを書き込む処理をここに書く"""
-        # TODO: repository層のdynamodb.pyを呼び出して書き込みの処理をおく
-        timestamp = timestamp.timestamp()
-        geo_data = {
-            "user_id": hashlib.md5(str(user_id).encode()).hexdigest(),
-            "timestamp": int(timestamp),
+        item = {
+            "user_id": request_data.user_id,
+            "timestamp": request_data.timestamp,
             "data": {
-                "longitude": str(longitude),
-                "latitude": str(latitude),
+                "longitude": request_data.longitude,
+                "latitude": request_data.latitude,
             },
         }
         table = self.dynamodb.Table("Geography")
-        table.put_item(Item=geo_data)
+        table.put_item(Item=item)
         return None
