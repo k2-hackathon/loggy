@@ -60,7 +60,7 @@ jobs:
         with:
           task-definition: task-definition.json
           container-name: loggy-fastapi
-          image: ${{ steps.push-image.outputs.image }}
+          image: 567785601309.dkr.ecr.ap-northeast-1.amazonaws.com/d0-loggy-fastapi:latest
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
