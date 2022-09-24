@@ -1,0 +1,64 @@
+name: deploy-to-dev
+
+on:
+  push:
+    branches:
+      - feature/terraform
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      ECR_REPOSITORY: d0-loggy-backend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node v16.13.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.13.0'
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1.5.1
+
+      - name: Push image to ECR
+        id: push-image
+        env:
+          DOCKER_BUILDKIT: 1
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REPOSITORY .
+          docker tag $ECR_REPOSITORY:latest 567785601309.dkr.ecr.ap-northeast-1.amazonaws.com/d0-loggy-fastapi:latest
+          docker push 567785601309.dkr.ecr.ap-northeast-1.amazonaws.com/d0-loggy-fastapi:latest &wait
+
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition d0-loggy --query=taskDefinition > task-definition.json
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: loggy-fastapi
+          image: ${{ steps.push-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: d0-loggy-api
+          cluster: d0-loggy
+          wait-for-service-stability: false
