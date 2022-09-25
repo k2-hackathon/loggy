@@ -10,7 +10,6 @@ services:
       - ./dynamodb_data:/data
     ports:
       - 8000:8000
-
   dynamodb-admin:
     image: aaronshaf/dynamodb-admin:latest
     container_name: "loggy-dynamodb-admin"
@@ -20,7 +19,6 @@ services:
       - 8001:8001
     depends_on:
       - dynamodb
-
   fastapi:
     container_name: "loggy-fastapi"
     build: 
@@ -33,3 +31,11 @@ services:
       - ./packages/backend/backend:/app
     env_file:
       - .env
+  awscli:
+    build: ./aws_cli
+    entrypoint: [""]
+    tty: true
+    command:
+      /bin/bash -c "bash bin/*.sh"
+    depends_on:
+      - dynamodb
