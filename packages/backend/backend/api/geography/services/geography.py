@@ -1,5 +1,4 @@
 import boto3
-import hashlib
 from ..models.geography import GeographyModel
 
 
