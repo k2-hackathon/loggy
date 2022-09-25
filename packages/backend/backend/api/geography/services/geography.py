@@ -2,6 +2,7 @@ import boto3
 import hashlib
 from ..models.geography import GeographyModel
 
+
 class GeographyService:
     def __init__(self):
         self.dynamodb = boto3.resource(
@@ -12,10 +13,7 @@ class GeographyService:
             region_name="",
         )
 
-    def create_geography(
-        self,
-        request_data: GeographyModel
-    ):
+    def create_geography(self, request_data: GeographyModel):
         """DynamoDBに位置情報の生データを書き込む処理をここに書く"""
         item = {
             "user_id": request_data.user_id,
