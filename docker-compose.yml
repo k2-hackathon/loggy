@@ -32,7 +32,7 @@ services:
     env_file:
       - .env
   awscli:
-    build: ./aws_cli
+    build: ./.docker/aws_cli
     entrypoint: [""]
     tty: true
     command:
