@@ -1,17 +1,9 @@
 import boto3
 from ..models.geography import GeographyModel
+from ..client.dynamodb import dynamodb
 
 
 class GeographyService:
-    def __init__(self):
-        self.dynamodb = boto3.resource(
-            service_name="dynamodb",
-            endpoint_url="http://dynamodb:8000",
-            aws_access_key_id="",
-            aws_secret_access_key="",
-            region_name="",
-        )
-
     def create_geography(self, request_data: GeographyModel):
         """DynamoDBに位置情報の生データを書き込む処理をここに書く"""
         item = {
@@ -22,6 +14,6 @@ class GeographyService:
                 "latitude": request_data.latitude,
             },
         }
-        table = self.dynamodb.Table("Geography")
+        table = dynamodb.Table("Geography")
         table.put_item(Item=item)
         return None
