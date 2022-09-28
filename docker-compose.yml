@@ -33,7 +33,7 @@ services:
       - .env
   awscli:
     build: ./.docker/aws_cli
-    entrypoint: [""]
+    entrypoint: []
     tty: true
     command:
       /bin/bash -c "bash bin/*.sh"
