@@ -1,4 +1,4 @@
-from ..services.aggregates import AggregateService
+from api.aggregates.services.aggregates import AggregateService
 
 
 def get_lodgings(user_id: int):
