@@ -1,6 +1,24 @@
 version: "3.0"
 
 services:
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    container_name: "loggy-dynamodb"
+    user: root
+    command: -jar DynamoDBLocal.jar -sharedDb -dbPath /data
+    volumes:
+      - ./dynamodb_data:/data
+    ports:
+      - 8000:8000
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin:latest
+    container_name: "loggy-dynamodb-admin"
+    environment:
+      - DYNAMO_ENDPOINT=dynamodb:8000
+    ports:
+      - 8001:8001
+    depends_on:
+      - dynamodb
   fastapi:
     container_name: "loggy-fastapi"
     build: 
@@ -13,3 +31,11 @@ services:
       - ./packages/backend/backend:/app
     env_file:
       - .env
+  awscli:
+    build: ./.docker/aws_cli
+    entrypoint: []
+    tty: true
+    command:
+      /bin/bash -c "bash bin/*.sh"
+    depends_on:
+      - dynamodb

@@ -13,8 +13,3 @@ app.include_router(aggregates.router)
 app.include_router(users.router)
 app.include_router(geography.router)
 app.include_router(health_check.router)
-
-if __name__ == "__main__":
-    app = Typer()
-    app.command()(aggregator)
-    app()
