@@ -1,5 +1,5 @@
 from api.geography.models.geography import GeographyModel
-from api.geography.client.dynamodb import dynamodb
+from api.geography.clients.dynamodb import dynamodb
 
 
 class GeographyService:
