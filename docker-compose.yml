@@ -39,3 +39,14 @@ services:
       /bin/bash -c "bash bin/*.sh"
     depends_on:
       - dynamodb
+  postgresql:
+    image: postgres:14
+    container_name: loggy-postgresql
+    tty: true
+    ports:
+      - 5432:5432
+    volumes:
+      - ./rdb_data:/var/lib/postgresql/data
+      - ./.docker/postgresql/scripts:/docker-entrypoint-initdb.d
+    env_file:
+      - .env
