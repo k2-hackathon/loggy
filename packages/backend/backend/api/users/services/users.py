@@ -1,5 +1,11 @@
 import psycopg2
 from api.settings import PostgreSQL
+from api.users.models.users import (
+    GetUserResponseModel,
+    GetUserRequestModel,
+    CreateUserRequestModel,
+)
+import psycopg2.extras
 
 
 class UserDataService:
@@ -9,7 +15,7 @@ class UserDataService:
     - ユーザーデータの登録
     """
 
-    def get_user_profile(self, user_id: str):
+    def get_user_profile(self, req: GetUserRequestModel) -> GetUserResponseModel:
         # TODO: postgreql.pyからデータを取得する
         with psycopg2.connect(
             dbname=PostgreSQL.DB_NAME,
@@ -18,13 +24,14 @@ class UserDataService:
             host=PostgreSQL.HOST,
             port=PostgreSQL.PORT,
         ) as conn:
-            with conn.cursor() as curs:
-                query = f"SELECT name FROM users WHERE users.user_id = '{user_id}';"
+            with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as curs:
+                query = f"SELECT user_id, name FROM users WHERE users.user_id = '{req.user_id}';"
                 curs.execute(query)
-                data = curs.fetchall()
-        return data
+                row_data = curs.fetchall()
+                result = dict(row_data[0])  # dictに変換
+        return GetUserResponseModel(user_id=result["user_id"], name=result["name"])
 
-    def create_user(self, user_id: str, username: str, mail: str):
+    def create_user(self, req: CreateUserRequestModel) -> None:
         # TODO: postgreql.pyでデータを書き込む
         with psycopg2.connect(
             dbname=PostgreSQL.DB_NAME,
@@ -34,7 +41,6 @@ class UserDataService:
             port=PostgreSQL.PORT,
         ) as conn:
             with conn.cursor() as curs:
-                query = f"INSERT INTO users(user_id, name, mail)values('{user_id}', '{username}', '{mail}')"
-                print(query)
+                query = f"INSERT INTO users(user_id, name, mail)values('{req.user_id}', '{req.username}', '{req.mail}')"
                 curs.execute(query)
                 conn.commit()
