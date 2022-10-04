@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from api.users.usecases.user_prodile import get_users, create_users
+from api.users.usecases.users import get_users, create_users
 
 router = APIRouter()
 
