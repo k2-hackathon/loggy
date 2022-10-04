@@ -41,6 +41,6 @@ class UserDataService:
             port=PostgreSQL.PORT,
         ) as conn:
             with conn.cursor() as curs:
-                query = f"INSERT INTO users(user_id, name, mail)values('{req.user_id}', '{req.username}', '{req.mail}')"
+                query = f"INSERT INTO users(user_id, name, mail)values('{req.user_id}', '{req.name}', '{req.mail}')"
                 curs.execute(query)
                 conn.commit()

@@ -12,5 +12,5 @@ class GetUserResponseModel(BaseModel):
 
 class CreateUserRequestModel(BaseModel):
     user_id: str
-    username: str
+    name: str
     mail: str

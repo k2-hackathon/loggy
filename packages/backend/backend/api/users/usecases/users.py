@@ -1,5 +1,5 @@
 from api.users.services.users import UserDataService
-from api.users.models.users import GetUserRequestModel
+from api.users.models.users import GetUserRequestModel, CreateUserRequestModel
 
 
 def get_users(user_id: str) -> str:
@@ -8,6 +8,6 @@ def get_users(user_id: str) -> str:
     return response
 
 
-def create_users(user_id: str, username: str, mail: str) -> None:
+def create_users(user_id: str, name: str, mail: str) -> None:
     service = UserDataService()
-    service.create_user(user_id=user_id, username=username, mail=mail)
+    service.create_user(CreateUserRequestModel(user_id=user_id, name=name, mail=mail))
