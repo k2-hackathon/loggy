@@ -1,13 +1,20 @@
-from api.users.services.users import UserDataService
-from api.users.models.users import GetUserRequestModel, CreateUserRequestModel
+from typing import List
+
+from ..schema import GetResponseBody, PostRequestBody, PostResponseBody
 
 
-def get_user(user_id: str) -> str:
-    service = UserDataService()
-    response = service.get_user_profile(GetUserRequestModel(user_id=user_id))
+def list_user(request) -> GetResponseBody:
+    # service = UserDataService()
+    # response = service.list_user_profile(GetUserRequestModel(user_id=user_id))
+    response = GetResponseBody(users=[])
     return response
 
 
-def create_user(user_id: str, name: str, mail: str) -> None:
-    service = UserDataService()
-    service.create_user(CreateUserRequestModel(user_id=user_id, name=name, mail=mail))
+def create_user(request: PostRequestBody, *arg, **kwargs) -> PostResponseBody:
+    data = PostRequestBody(*request)
+    # service = UserDataService()
+    # service.create_user(CreateUserRequestModel(user_id=user_id, name=name, mail=mail))
+    response = PostResponseBody(
+        user={"id": "12345667890", "name": data.name, "email": data.email}
+    )
+    return response

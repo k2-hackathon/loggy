@@ -1,5 +1,5 @@
 import boto3
-from api.settings import DynamoDB
+from common.settings import DynamoDB
 
 dynamodb = boto3.resource(
     service_name=DynamoDB.SERVICE_NAME,

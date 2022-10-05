@@ -1,4 +1,4 @@
-from api.aggregates.services.aggregates import AggregateService
+from ..services.aggregates import AggregateService
 
 
 def get_stays(user_id: int):
