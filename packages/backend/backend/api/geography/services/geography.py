@@ -1,6 +1,6 @@
 from clients.dynamodb import dynamodb
 
-from ..models.geography import GeographyModel
+from ..schema.geography import GeographyModel
 
 
 class GeographyService:

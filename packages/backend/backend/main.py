@@ -1,7 +1,6 @@
-from fastapi import FastAPI
-
 import api
 import api_internal
+from fastapi import FastAPI
 
 app = FastAPI()
 

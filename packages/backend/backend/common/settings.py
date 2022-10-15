@@ -1,5 +1,6 @@
 import os
 
+
 # DATABASE
 class DynamoDB:
     SERVICE_NAME = os.getenv("DYNAMODB_SERVICE_NAME")
