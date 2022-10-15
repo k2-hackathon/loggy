@@ -30,7 +30,7 @@ services:
     volumes:
       - ./packages/backend/backend:/app
     env_file:
-      - .env
+      - packages/backend/.env
   awscli:
     build: ./.docker/aws_cli
     entrypoint: []
