@@ -12,6 +12,7 @@ boto3 = "^1.24.80"
 postgres = "^4.0"
 SQLAlchemy = "^1.4.41"
 isort = "^5.10.1"
+alembic = "^1.8.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
