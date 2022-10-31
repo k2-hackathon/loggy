@@ -15,7 +15,7 @@ resource "aws_ecs_service" "ecs_service_api" {
 
   name = local.ecs_service_api_name
 
-  desired_count    = 0
+  desired_count    = 1
   launch_type      = "FARGATE"
   platform_version = "1.4.0"
 

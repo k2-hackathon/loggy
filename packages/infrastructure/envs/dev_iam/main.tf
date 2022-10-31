@@ -2,9 +2,11 @@ locals {
   required_tags = {}
   tags          = merge(var.resource_tags, local.required_tags)
 
-  iam_role_task_execution_name = "${local.prefix}-iam_role_task_execution" 
+  prefix = "${var.environment}-${var.project_name}"
 
-  iam_role_task_execution_arn   = resource.aws_iam_role.iam_role_task_execution.arn
+  iam_role_task_execution_name = "${local.prefix}-iam_role_task_execution"
+
+  iam_role_task_execution_arn = resource.aws_iam_role.iam_role_task_execution.arn
 }
 
 # NOTE: sample policy
@@ -19,23 +21,29 @@ resource "aws_iam_role" "iam_role_task_execution" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          Service = "ec2.amazonaws.com"
+          Service = "ecs-tasks.amazonaws.com"
         }
       },
     ]
   })
 
 
+  inline_policy {
+    name = "${local.prefix}-task-execution-policy"
     policy = jsonencode({
       Version = "2012-10-17"
       Statement = [
         {
-          Action   = ["ec2:Describe*"]
+          Action = [
+            "secretsmanager:GetSecretValue",
+            "kms:Decrypt"
+          ]
           Effect   = "Allow"
           Resource = "*"
         },
       ]
     })
+  }
 
   tags = local.tags
 }
