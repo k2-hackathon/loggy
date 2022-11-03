@@ -20,7 +20,7 @@ services:
     depends_on:
       - dynamodb
   fastapi:
-    container_name: "loggy-fastapi"
+    container_name: loggy-fastapi
     build: 
       context: ./packages/backend
       dockerfile: ./Dockerfile
