@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 from settings import Base
-from models.models import User, Lodging, Stay
+import models
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -64,10 +64,13 @@ def run_migrations_online() -> None:
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
+    url = config.get_main_option("sqlalchemy.url")
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            url=url,
+            connection=connection,
+            target_metadata=target_metadata
         )
 
         with context.begin_transaction():
