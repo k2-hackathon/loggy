@@ -1,6 +1,6 @@
 from ..router import router
-from .schema import GetResponseBody, PostResponseBody
-from .usecases.users import create_user, list_user
+from .schema.users import User
+from .usecases.users import create_user, read_user
 
-router.get("/users", response_model=GetResponseBody)(list_user)
-router.post("/users", response_model=PostResponseBody)(create_user)
+router.get("/users/{id}")(read_user)
+router.post("/users")(create_user)  # TODO: response_model=をつける

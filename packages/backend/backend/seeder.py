@@ -4,10 +4,10 @@ pardir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(pardir)
 
 import models
-from settings import Session
+from database import session
 
 
-session = Session()
+session = session()
 
 def seed():
     user = models.users.User(

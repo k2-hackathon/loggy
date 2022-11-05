@@ -1,6 +1,8 @@
-# import psycopg2
-# import psycopg2.extras
-from common.settings import PostgreSQL
+from sqlalchemy.orm import Session
+
+from models import users
+
+from ..schema.users import User, UserCreateRequest
 
 
 class UserDataService:
@@ -10,34 +12,18 @@ class UserDataService:
     - ユーザーデータの登録
     """
 
-    # def get_user_profile(self, req: GetUserRequestModel) -> GetUserResponseModel:
-    #     # TODO: postgreql.pyからデータを取得する
-    #     # with psycopg2.connect(
-    #     #     dbname=PostgreSQL.DB_NAME,
-    #     #     user=PostgreSQL.USER,
-    #     #     password=PostgreSQL.PASSWORD,
-    #     #     host=PostgreSQL.HOST,
-    #     #     port=PostgreSQL.PORT,
-    #     # ) as conn:
-    #     #     with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as curs:
-    #     #         query = f"SELECT user_id, name FROM users WHERE users.user_id = '{req.user_id}';"
-    #     #         curs.execute(query)
-    #     #         row_data = curs.fetchall()
-    #     #         result = dict(row_data[0])  # dictに変換
-    #     # return GetUserResponseModel(user_id=result["user_id"], name=result["name"])
-    #     return []
+    def get_user_profile(self, db: Session, user_id: str) -> dict:
+        res = db.query(users.User).filter(users.User.id == user_id).first()
+        if not res:
+            return
+        return res
 
-    # def create_user(self, req: CreateUserRequestModel) -> list:
-    #     # TODO: postgreql.pyでデータを書き込む
-    #     # with psycopg2.connect(
-    #     #     dbname=PostgreSQL.DB_NAME,
-    #     #     user=PostgreSQL.USER,
-    #     #     password=PostgreSQL.PASSWORD,
-    #     #     host=PostgreSQL.HOST,
-    #     #     port=PostgreSQL.PORT,
-    #     # ) as conn:
-    #     #     with conn.cursor() as curs:
-    #     #         query = f"INSERT INTO users(user_id, name, mail)values('{req.user_id}', '{req.name}', '{req.mail}')"
-    #     #         curs.execute(query)
-    #     #         conn.commit()
-    #     return []
+    def create_user(self, db: Session, request: UserCreateRequest) -> dict:
+        user = users.User(id=request.id, name=request.name)
+        try:
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            return user
+        except Exception as e:
+            raise Exception(f"create user is failed. error message: {e}")
