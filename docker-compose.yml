@@ -7,7 +7,7 @@ services:
     user: root
     command: -jar DynamoDBLocal.jar -sharedDb -dbPath /data
     volumes:
-      - ./dynamodb_data:/data
+      - dynamodb_data:/data
     ports:
       - 8000:8000
   dynamodb-admin:
@@ -30,7 +30,7 @@ services:
     volumes:
       - ./packages/backend/backend:/app
     env_file:
-      - .env
+      - packages/backend/.env
   awscli:
     build: ./.docker/aws_cli
     entrypoint: []
@@ -39,3 +39,17 @@ services:
       /bin/bash -c "bash bin/*.sh"
     depends_on:
       - dynamodb
+  postgres:
+    image: postgres:14
+    container_name: loggy-postgres
+    tty: true
+    ports:
+      - 5432:5432
+    volumes:
+      - rdb_data:/var/lib/postgresql/data
+    env_file:
+      - packages/backend/.env
+
+volumes:
+  rdb_data:
+  dynamodb_data:

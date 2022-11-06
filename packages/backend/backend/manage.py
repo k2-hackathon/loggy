@@ -1,4 +1,5 @@
 import sys
+
 from commands.aggregator import aggregator
 
 args = sys.argv

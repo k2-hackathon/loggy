@@ -1,6 +1,6 @@
-import boto3
-from ..models.geography import GeographyModel
-from ..client.dynamodb import dynamodb
+from clients.dynamodb import dynamodb
+
+from ..schema.geography import GeographyModel
 
 
 class GeographyService:
