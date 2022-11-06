@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from models import users
+from models import user_details, users
 
 from ..schema.users import User, UserCreateRequest
 
@@ -18,12 +18,13 @@ class UserDataService:
             return
         return res
 
-    def create_user(self, db: Session, request: UserCreateRequest) -> dict:
+    def create_user(self, db: Session, request: UserCreateRequest) -> None:
         user = users.User(id=request.id, name=request.name)
+        user_details = user_details(id=request.id, email=request.email)
         try:
             db.add(user)
+            db.add(user_details)
             db.commit()
-            db.refresh(user)
-            return user
+            return
         except Exception as e:
             raise Exception(f"create user is failed. error message: {e}")
