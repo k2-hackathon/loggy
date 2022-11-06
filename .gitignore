@@ -217,7 +217,7 @@ dist
 .dynamodb/
 dynamodb_data
 
-# MySQL Local files
+# PostgreSQL Local files
 rdb_data
 
 # TernJS port file
