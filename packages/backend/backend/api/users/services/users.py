@@ -20,10 +20,10 @@ class UserDataService:
 
     def create_user(self, db: Session, request: UserCreateRequest) -> None:
         user = users.User(id=request.id, name=request.name)
-        user_details = user_details(id=request.id, email=request.email)
+        user_detail = user_details.UserDetails(id=request.id, email=request.email)
         try:
             db.add(user)
-            db.add(user_details)
+            db.add(user_detail)
             db.commit()
             return
         except Exception as e:
