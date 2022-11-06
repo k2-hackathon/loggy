@@ -20,5 +20,6 @@ COPY --from=builder /app/requirements-dev.txt requirements-dev.txt
 RUN pip install -r requirements-dev.txt --no-cache-dir
 
 COPY ./backend .
+RUN chmod 744 /app/initialize.sh
 
 CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8080"]

@@ -1,6 +1,7 @@
-from api.geography.services.geography import GeographyService
 from datetime import datetime
-from api.geography.models.geography import GeographyModel
+
+from ..schema.geography import GeographyModel
+from ..services.geography import GeographyService
 
 
 def create_geography(user_id: str, longitude: str, latitude: str, date: datetime):
