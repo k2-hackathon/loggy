@@ -1,1 +1,1 @@
-from . import users, lodgings, stays
+from . import users, user_details, lodgings, stays

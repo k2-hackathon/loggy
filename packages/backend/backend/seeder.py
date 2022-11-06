@@ -14,13 +14,18 @@ def seed():
         id = "eeee3e9e-ec6e-ecb9-6d14-da6acfa91824",
         name = "haruki_kurosawa",
     )
+    user_details = models.user_details.UserDetails(
+        user_id = "eeee3e9e-ec6e-ecb9-6d14-da6acfa91824",
+        email = "sample@sample.com",
+    )
     lodging = models.lodgings.Lodging(
-        user_id= "eeee3e9e-ec6e-ecb9-6d14-da6acfa91824",
+        user_id = "eeee3e9e-ec6e-ecb9-6d14-da6acfa91824",
     )
     stay = models.stays.Stay(
         user_id = "eeee3e9e-ec6e-ecb9-6d14-da6acfa91824",
     )
     session.add(user)
+    session.add(user_details)
     session.add(lodging)
     session.add(stay)
     session.commit()
